@@ -1,0 +1,36 @@
+.vinesco_card{
+    margin-top: 5rem;
+    
+}
+.vinesco_cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.vines_card{
+    width: 290px;
+    height: 390px;
+}
+.vines_card_img {
+    width: 100%;
+    height: 290px;
+}
+.vines_card_img img{
+    width: 100%;
+}
+.vines_card_title {
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+}
+.vines_card_title_btn{
+    margin-top: 10px;
+    text-align: center;
+
+}
+.vines_card_title_btn button {
+    background: #930077;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+}
