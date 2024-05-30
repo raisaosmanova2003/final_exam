@@ -8,21 +8,21 @@ import axios from "axios";
 function App() {
   const [data, setData] = useState([]);
   const [orginal, setOrginal] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const router = createBrowserRouter(ROUTES);
   const [basket, setBasket] = useState(
     localStorage.getItem("basket")
       ? JSON.parse(localStorage.getItem("basket"))
       : []
   );
-  const [wishlist, setWishlist] = useState([]);
-  const router = createBrowserRouter(ROUTES);
-
-  console.log(data);
+ 
   useEffect(() => {
     axios.get("http://localhost:8080/api/products").then((res) => {
       setData([...res.data]);
       setOrginal(res.data);
     });
   }, []);
+  
   useEffect(() => {
     localStorage.setItem("basket", JSON.stringify(basket));
   }, [basket]);
@@ -38,8 +38,8 @@ function App() {
       };
       setBasket([...basket, newItem]);
     } else {
-      (basketItem.count += 1),
-        (basketItem.totalPrice += basketItem.price),
+      basketItem.count += 1,
+        basketItem.totalPrice += basketItem.price,
         setBasket([...basket]);
     }
   }
@@ -47,7 +47,8 @@ function App() {
     let target = basket.find((x) => x._id == id);
     console.log(target);
     if (target.count > 1) {
-      (target.count -= 1), (target.totalPrice -= target.price);
+      target.count -= 1, 
+      target.totalPrice -= target.price;
       setBasket([...basket]);
     } else {
       setBasket([...basket.filter((x) => x._id != id)]);
@@ -66,33 +67,42 @@ function App() {
   function deleteFromWishlist(product) {
     const target = wishlist.find((x) => x._id == product._id);
     wishlist.splice(wishlist.indexOf(target), 1);
-    setBasket([...wishlist]);
+    setWishlist([...wishlist]);
   }
 
-  const searchData = (searchvalue) => {
-    if ((searchvalue = "")) {
+  // function searchData (searchvalue) {
+  //   if (searchvalue = " ") {
+  //     setData([...orginal]);
+  //   } else {
+  //     setData([
+  //       ...orginal.filter((x) =>
+  //         x.title
+  //           .trim()
+  //           .toLowerCase()
+  //           .includes(searchvalue.trim().toLowerCase())
+  //       ),
+  //     ]);
+  //   }
+  // };
+
+  function searchData (e){
+    const searching=e.target.value.trim().toLowerCase();
+    if(searching==""){
       setData([...orginal]);
     } else {
-      setData([
-        ...orginal.filter((x) =>
-          x.title
-            .trim()
-            .toLowerCase()
-            .includes(searchvalue.trim().toLowerCase())
-        ),
-      ]);
+const search=data.filter((x)=>x.name.trim().toLowerCase().includes(searching))
+setData([...search])
     }
-  };
-
-  const sortingData = (e) => {
+  }
+    function sortingData (e) {
     const sorting = e.target.value;
     if (sorting == "default") {
       setData([...orginal]);
     } else if (sorting == "A-Z") {
-      const sortAZ = data.sort((a, b) => b.title.localeCompare(a.title));
+      const sortAZ = data.sort((a, b) => a.title.localeCompare(b.title));
       setData([...sortAZ]);
     } else if (sorting == "Z-A") {
-      const sortZA = data.sort((a, b) => a.title.localeCompare(b.title));
+      const sortZA = data.sort((a, b) => b.title.localeCompare(a.title));
       setData([...sortZA]);
     } else if (sorting == "0-9") {
       const sort09 = data.sort((a, b) => a.price - b.price);
@@ -102,6 +112,7 @@ function App() {
       setData([...sort90]);
     }
   };
+
   const contextdata = {
     data,
     setBasket,
@@ -124,3 +135,7 @@ function App() {
 }
 
 export default App;
+
+
+
+

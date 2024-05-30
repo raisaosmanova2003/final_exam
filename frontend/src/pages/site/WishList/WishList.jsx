@@ -17,7 +17,7 @@ const WishList = () => {
   </thead>
   <tbody>
   {
-  WishList.map((item,index)=>(
+  WishList.map ((item,index)=>(
     <tr key={index}>
       <th scope="row">{index+1}</th>
       <td><img width={"80px"} src={item.image} alt="" /></td>

@@ -16,6 +16,7 @@ useEffect(()=>{
         console.log("error")
     })
 },[])
+
   return (
     <section className='vinesco_card'>
     <select name="" id="" onChange={sortingData}>
@@ -25,12 +26,12 @@ useEffect(()=>{
         <option value="0-9">0-9</option>
         <option value="9-0">9-0</option>
       </select>
-      <input type="text" name="" id="" onChange={(e)=>{
-        searchData(e.target.value)
-      }}/>
+      <input type="text" name="" id="" placeholder='search' onChange={searchData}/>
+
+
       <div className="vinesco_cards">
       
-      {
+      {/* {
         data.map((item,index)=>(
             <div key={index} className="vines_card">
             <div className="vines_card_img">
@@ -50,8 +51,18 @@ useEffect(()=>{
             </div>
         </div>
         ))
-      }
+      } */}
         
+        {
+          data.map((item,index)=>(
+          <div key={index}>
+            <img src={item.image}alt="" />
+            <button onClick={()=>{addToBasket(item._id)}}></button>
+            <button onClick={()=>{addToWishlist(item)}}></button>
+           <Link to={`/detail/${item._id}`}> <button> detail</button></Link>
+          </div>
+          ))
+        }
       </div>
     </section>
   )
